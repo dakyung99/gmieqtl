@@ -1,0 +1,262 @@
+{% load static %}
+{% load custom %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, maximum-scale=1.0" />
+    <title>GMIeqtl</title>
+    <meta name="description" content="GMIeqtl is a tool for browsing expression QTL (cis-eQTL) datasets. It provides a number of tools aimed at functional interpretation." />
+    <meta property="og:title" content="GMIeqtl" />
+    <meta property="og:description" content="GMIeqtl is a tool for browsing expression QTL (cis-eQTL) datasets. It provides a number of tools aimed at functional interpretation." />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://gmieqtl.snu.ac.kr" />
+    <meta property="og:image" content="{% static 'dna@thumbnail.png' %}" />
+    <link rel="icon" type="image/png" sizes="32x32" href="{% static 'favicon@2x.png' %}" />
+    <link rel="icon" type="image/png" sizes="16x16" href="{% static 'favicon.png' %}" />
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700&display=swap');
+        html {
+            font-size: 16px;
+        }
+        body {
+            margin: 0;
+            background-color: #ffffff;
+            font-family: 'Noto Sans KR', sans-serif;
+            font-weight: 400;
+            color: #222222;
+        }
+        .masthead {
+            width: 100%;
+            height: 12rem;
+            background: url('/static/dna-short@optimized.png') repeat-x -64px 50%;
+            background-size: contain;
+        }
+        .content {
+            padding: 1rem;
+        }
+        .about-project {
+            font-size: 1.5rem;
+            font-weight: 700;
+        }
+        .divider {
+            width: 2rem;
+            height: 0.25rem;
+            margin: 1rem 0;
+            background-color: #222222;
+        }
+        .project-description {
+            padding: 1.5rem;
+            margin: 0 0 3rem 0;
+            border: 1px solid #222222;
+            font-size: 0.9rem;
+        }
+        .download-remote-files {
+            margin-bottom: 2rem;
+        }
+        .remote-file {
+            display: table;
+            color: #222222;
+        }
+        .remote-file:hover {
+            opacity: 0.7;
+        }
+        .search-sorting {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 1.5rem;
+        }
+        .search {
+            display: flex;
+            column-gap: 0.5rem;
+        }
+        [name=keyword] {
+            width: 9.5rem;
+            padding: 0.5rem;
+            border: 1px solid #222222;
+            outline: none;
+            font-family: 'Noto Sans KR', sans-serif;
+        }
+        .search-btn,
+        .csv-download-btn {
+            display: inline-flex;
+            align-items: center;
+            height: 37px;
+            padding: 0 0.5rem;
+            background-color: #222222;
+            border: none;
+            border-radius: 0.25rem;
+            outline: none;
+            font-family: 'Noto Sans KR', sans-serif;
+            font-size: 0.9rem;
+            color: #ffffff;
+            line-height: 1;
+            text-decoration: none;
+            cursor: pointer;
+        }
+        .search-btn:hover,
+        .csv-download-btn:hover {
+            background-color: #444444;
+        }
+        .sorting {
+            display: flex;
+            align-self: flex-end;
+            column-gap: 1rem;
+        }
+        .sorting-label {
+            font-size: 0.9rem;
+        }
+        [name=o_type] {
+            background-color: #ffffff;
+            border: 1px solid #222222;
+            outline: none;
+            font-family: 'Noto Sans KR', sans-serif;
+        }
+        [name=o_reverse] {
+            vertical-align: bottom;
+        }
+        .table-wrapper {
+            overflow-x: scroll;
+            scrollbar-width: none;
+            -ms-overflow-style: none;
+        }
+        .table-wrapper::-webkit-scrollbar {
+            display: none;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        tbody > tr {
+            border-bottom: 1px solid #e9e9e9;
+        }
+        th {
+            padding: 0.5rem;
+            background-color: #222222;
+            font-size: 0.8rem;
+            color: #ffffff;
+            text-align: center;
+            white-space: nowrap;
+        }
+        td {
+            padding: 0.5rem;
+            font-size: 0.9rem;
+        }
+        .sorting-arrow {
+            margin-left: 0.25rem;
+            font-size: 0.6rem;
+        }
+        .break {
+            min-width: 5rem;
+            word-break: break-all;
+        }
+        @media screen and (max-width: 991px) {
+            .project-description {
+                padding: 1rem;
+            }
+            .search-sorting {
+                flex-direction: column;
+                row-gap: 1rem;
+            }
+            .sorting {
+                align-self: flex-start;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="masthead"></div>
+    <main class="content">
+        <div class="about-project">About project</div>
+        <div class="divider"></div>
+        <div class="project-description">
+            Genomic Medicine Institute (GMI) lead by Professor Jong-il Kim aims to identify the relationship
+            between genomics and disease. We are interested in population genomics and genomic regulation in
+            the East Asian population and research through bioinformatics and functional validation.<br />
+            <br />
+            GWAS (Genome Wide Assiciation Study) is a research approach used to identify genomic variants
+            that are statistically associated with a risk for a disease or a particular trait.<br />
+            eQTL (expression Quantitative Trait Locus) studies associate genomic and transcriptomic data sets
+            from the same individuals to identify loci that affect mRNA expression.<br />
+            <br />
+            In GMI eQTL database, we provide significant GWAS and eQTL signals with fine-mapping statistics.
+            Full summary statistics are also downloadable. Information for each eQTL project is listed in
+            the specific eQTL page.<br />
+            <br />
+            For additional information contact gmi418418@gmail.com<br />
+            <br />
+            GMI eQTL database is supported by the National Research Foundation of Korea(NRF) grant funded by
+            the Korea government (MSIT).
+        </div>
+        <div class="download-remote-files">
+            <a class="remote-file" href="https://drive.google.com/uc?export=download&id=1lS2Ev5n0Y1rLsHum6EnoInX2MvTU24Hu" target="_blank">
+                [Download] eqtl summary statistics
+            </a>
+            <a class="remote-file" href="https://drive.google.com/uc?export=download&id=168ATqlgQ5lKtTfdEy79nL2IOQgctiMrE" target="_blank">
+                [Download] eqtl finemapping PIP over 0.1
+            </a>
+        </div>
+        <form class="search-sorting" method="get">
+            <div class="search">
+                <input type="text" name="keyword" value="{{ keyword }}" placeholder="GeneSymbol Keyword" />
+                <input class="search-btn" type="submit" value="Search" />
+                <a class="csv-download-btn" href="?{% merge_query_string request 'download=true' %}" target="_blank">
+                    Download
+                </a>
+            </div>
+            <div class="sorting">
+                <label class="sorting-label">
+                    Sorting&nbsp;
+                    <select name="o_type">
+                        {% for choice in FIELD_CHOICES %}
+                            <option value="{{ choice.1 }}" {% if o_type == choice.1 %}selected="selected"{% endif %}>
+                                {{ choice.0 }}
+                            </option>
+                        {% endfor %}
+                    </select>
+                </label>
+                <label class="sorting-label">
+                    reverse
+                    <input type="checkbox" name="o_reverse" value="true"
+                           {% if o_reverse %}checked="checked"{% endif %}
+                    />
+                </label>
+            </div>
+        </form>
+        <div class="table-wrapper">
+            <table>
+            <thead>
+                <tr>
+                    {% for choice in FIELD_CHOICES %}
+                        <th>
+                            {{ choice.0 }}
+                            {% if o_type == choice.1 %}
+                                <span class="sorting-arrow">{% if o_reverse %}▼{% else %}▲{% endif %}</span>
+                            {% endif %}
+                        </th>
+                    {% endfor %}
+                </tr>
+            </thead>
+            <tbody>
+                {% for row in row_set %}
+                    <tr>
+                        {% for choice in FIELD_CHOICES %}
+                            <td {% if choice.0 == 'SNP' %}class="break"{% endif %}>{{ row|get_attr:choice.1 }}</td>
+                        {% endfor %}
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        </div>
+    </main>
+    <script>
+        const form = document.querySelector('.search-sorting');
+        const oType = document.querySelector('[name=o_type]');
+        const oReverse = document.querySelector('[name=o_reverse]');
+
+        oType.addEventListener('change', () => form.submit());
+        oReverse.addEventListener('change', () => form.submit());
+    </script>
+</body>
+</html>
